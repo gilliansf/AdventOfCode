@@ -7,7 +7,8 @@
             List<Solver> completedSolvers = new List<Solver>()
             {
                 new Day01(),
-                new Day02()
+                new Day02(),
+                new Day03()
             };
 
             while (true)
