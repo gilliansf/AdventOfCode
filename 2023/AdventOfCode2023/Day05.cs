@@ -33,7 +33,9 @@ namespace AdventOfCode2023
             IEnumerable<long[]> seedRanges = puzzleInput[0].Split(": ")[1].Split(" ").Select(x => long.Parse(x)).ToArray().Chunk(2);
             List<long[]> ranges = new List<long[]>();
 
-
+            //explanation: so for each seed range, it's going to recursively break down each following range
+            // so instead of searching seed-by-seed, it's going to search interval-by-interval, then return
+            // the lowest starting interval range
             foreach (long[] seedRange in seedRanges)
             {
                 var result = FindSeedLocation(puzzleInput, seedRange[0], seedRange[0] + seedRange[1]);
