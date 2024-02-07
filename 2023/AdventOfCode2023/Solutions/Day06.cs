@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace AdventOfCode2023
+namespace AdventOfCode2023.Solutions
 {
     public class Day06 : Solver
     {
@@ -33,7 +33,7 @@ namespace AdventOfCode2023
                 int loadingTime = 0;
                 while (loadingTime <= times[i])
                 {
-                    if (((times[i] - loadingTime) * loadingTime) > dists[i])
+                    if ((times[i] - loadingTime) * loadingTime > dists[i])
                         winnablePaths++;
 
                     loadingTime++;
@@ -55,7 +55,7 @@ namespace AdventOfCode2023
 
             for (int i = 1; i <= time; i++)
             {
-                if ((time - i) > (dist / i))
+                if (time - i > dist / i)
                     winnablePaths++;
             }
 

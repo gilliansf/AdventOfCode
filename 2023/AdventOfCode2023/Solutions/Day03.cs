@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode2023
+namespace AdventOfCode2023.Solutions
 {
     public class Day03 : Solver
     {
@@ -59,7 +59,7 @@ namespace AdventOfCode2023
                     }
 
                     if (gearNumbers.Count == 2)
-                        sum += (gearNumbers[0] * gearNumbers[1]);
+                        sum += gearNumbers[0] * gearNumbers[1];
                 }
             }
 

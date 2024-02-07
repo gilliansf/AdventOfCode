@@ -1,5 +1,4 @@
-﻿
-namespace AdventOfCode2023
+﻿namespace AdventOfCode2023.Solutions
 {
     public class Day04 : Solver
     {
@@ -23,7 +22,7 @@ namespace AdventOfCode2023
             {
                 int winCount = DetermineWinCount(input);
 
-                sum += ((int)(1 * Math.Pow(2, winCount - 1)));
+                sum += (int)(1 * Math.Pow(2, winCount - 1));
             }
 
             PrintResult(4, 1, sum.ToString());
@@ -38,7 +37,7 @@ namespace AdventOfCode2023
             Queue<int> scoreQueue = new Queue<int>(); //cards to be scored (copies)
             for (int i = 1; i <= puzzleInput.Count(); i++)
                 scoreQueue.Enqueue(i); //receiving original copies of all cards
-            
+
             while (scoreQueue.TryPeek(out int gameNumber))
             {
                 scoreQueue.Dequeue();

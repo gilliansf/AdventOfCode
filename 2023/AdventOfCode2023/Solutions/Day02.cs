@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode2023
+namespace AdventOfCode2023.Solutions
 {
     public class Day02 : Solver
     {
@@ -27,7 +27,7 @@ namespace AdventOfCode2023
                 if (Regex.Matches(input, _pairRegex).Any(pair =>
                 {
                     var tuple = pair.Value.Trim().Split(" ");
-                    return (maxValues[tuple[1]] < int.Parse(tuple[0]));
+                    return maxValues[tuple[1]] < int.Parse(tuple[0]);
                 }))
                     return 0;
 
@@ -48,8 +48,8 @@ namespace AdventOfCode2023
                 foreach (Match match in Regex.Matches(input, _pairRegex))
                 {
                     string[] pair = match.Value.Trim().Split(" ");
-                        if (!maxValues.ContainsKey(pair[1]) || maxValues[pair[1]] < int.Parse(pair[0]))
-                            maxValues[pair[1]] = int.Parse(pair[0]);
+                    if (!maxValues.ContainsKey(pair[1]) || maxValues[pair[1]] < int.Parse(pair[0]))
+                        maxValues[pair[1]] = int.Parse(pair[0]);
                 }
                 return maxValues.Values.Aggregate(1, (a, b) => a * b);
 

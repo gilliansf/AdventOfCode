@@ -1,6 +1,4 @@
-﻿
-
-namespace AdventOfCode2023
+﻿namespace AdventOfCode2023.Solutions
 {
     public class Day05 : Solver
     {
@@ -41,13 +39,13 @@ namespace AdventOfCode2023
                 var result = FindSeedLocation(puzzleInput, seedRange[0], seedRange[0] + seedRange[1]);
                 ranges = ranges.Concat(result).ToList();
             }
-            long lowestDestination = ranges.Select(y => y[0]).Min(); 
+            long lowestDestination = ranges.Select(y => y[0]).Min();
 
             PrintResult(5, 2, lowestDestination.ToString());
-            return lowestDestination; 
+            return lowestDestination;
 
         }
-        
+
         private long FindSeedLocation(List<string> puzzleInput, long seed)
         {
             List<int> mapIndexes = puzzleInput.Select((v, i) => new { v, i })
@@ -61,13 +59,13 @@ namespace AdventOfCode2023
                 int sectionLength = i + 1 == mapIndexes.Count() ? puzzleInput.Count() - mapIndexes[i] - 1
                     : mapIndexes[i + 1] - mapIndexes[i] - 2;
 
-                foreach (string map in puzzleInput.GetRange(mapIndexes[i]+ 1, sectionLength))
+                foreach (string map in puzzleInput.GetRange(mapIndexes[i] + 1, sectionLength))
                 {
                     long[] vals = map.Split(" ").Select(x => long.Parse(x)).ToArray();
 
                     if (currentEntryPoint >= vals[1] && currentEntryPoint <= vals[1] + vals[2])
                     {
-                        currentEntryPoint = (currentEntryPoint - vals[1]) + vals[0];
+                        currentEntryPoint = currentEntryPoint - vals[1] + vals[0];
                         break;
                     }
                 }
@@ -100,16 +98,16 @@ namespace AdventOfCode2023
                     //vals[1] = source range start
                     //vals[2] = range length
 
-                    if ((mapSourceRange.Item1 <= workingRangeStart && workingRangeStart < mapSourceRange.Item2) && //range opens in the map
-                            (mapSourceRange.Item1 <= workingRangeEnd && workingRangeEnd < mapSourceRange.Item2)) //and range closes in the map
+                    if (mapSourceRange.Item1 <= workingRangeStart && workingRangeStart < mapSourceRange.Item2 && //range opens in the map
+                            mapSourceRange.Item1 <= workingRangeEnd && workingRangeEnd < mapSourceRange.Item2) //and range closes in the map
                     {
-                        workingRangeStart = (workingRangeStart - mapSourceRange.Item1 + mapDestinationRange.Item1);
-                        workingRangeEnd = (workingRangeEnd - mapSourceRange.Item1 + mapDestinationRange.Item1);
+                        workingRangeStart = workingRangeStart - mapSourceRange.Item1 + mapDestinationRange.Item1;
+                        workingRangeEnd = workingRangeEnd - mapSourceRange.Item1 + mapDestinationRange.Item1;
                         break;
                     }
 
-                    else if ((mapSourceRange.Item1 <= workingRangeStart && workingRangeStart < mapSourceRange.Item2) && //range opens in the map
-                            (mapSourceRange.Item1 <= workingRangeEnd && workingRangeEnd > mapSourceRange.Item2)) //and range closes outside the map
+                    else if (mapSourceRange.Item1 <= workingRangeStart && workingRangeStart < mapSourceRange.Item2 && //range opens in the map
+                            mapSourceRange.Item1 <= workingRangeEnd && workingRangeEnd > mapSourceRange.Item2) //and range closes outside the map
                     {
                         //being broken up
 
@@ -118,13 +116,13 @@ namespace AdventOfCode2023
 
                         newRanges = newRanges.Concat(FindSeedLocation(puzzleInput, mapSourceRange.Item2, workingRangeEnd, i)).ToList();
 
-                        workingRangeStart = (workingRangeStart - mapSourceRange.Item1 + mapDestinationRange.Item1);
+                        workingRangeStart = workingRangeStart - mapSourceRange.Item1 + mapDestinationRange.Item1;
                         workingRangeEnd = mapDestinationRange.Item2;
                         break;
 
                     }
-                    else if ((mapSourceRange.Item1 > workingRangeStart && workingRangeStart <= mapSourceRange.Item2) && //range opens outside the map
-                            (mapSourceRange.Item1 <= workingRangeEnd && workingRangeEnd <= mapSourceRange.Item2)) //and range closes in the map
+                    else if (mapSourceRange.Item1 > workingRangeStart && workingRangeStart <= mapSourceRange.Item2 && //range opens outside the map
+                            mapSourceRange.Item1 <= workingRangeEnd && workingRangeEnd <= mapSourceRange.Item2) //and range closes in the map
                     {
                         //being broken up
 
@@ -133,7 +131,7 @@ namespace AdventOfCode2023
                         newRanges = newRanges.Concat(FindSeedLocation(puzzleInput, workingRangeStart, mapSourceRange.Item1 - 1, i)).ToList();
 
                         workingRangeStart = mapDestinationRange.Item1;
-                        workingRangeEnd = (workingRangeEnd - mapSourceRange.Item1 + mapDestinationRange.Item1);
+                        workingRangeEnd = workingRangeEnd - mapSourceRange.Item1 + mapDestinationRange.Item1;
                         break;
                     }
 

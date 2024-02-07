@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2023
+﻿namespace AdventOfCode2023.Solutions
 {
     public class Day07 : Solver
     {
@@ -77,7 +77,7 @@
             int totalWinnings = 0;
             int[] orderedBets = Array.ConvertAll(orderedHands.Select(x => x.Item2).Reverse().ToArray(), Convert.ToInt32);
 
-            orderedBets.Select((bet, index) => totalWinnings += ((index + 1) * bet)).ToArray().Count();
+            orderedBets.Select((bet, index) => totalWinnings += (index + 1) * bet).ToArray().Count();
             return totalWinnings;
 
         }
@@ -108,8 +108,8 @@
         }
 
         private int GetHandType(string hand, bool wildCard = false)
-        { 
-            bool wildCardAtPlay = (wildCard && hand.Contains("J"));
+        {
+            bool wildCardAtPlay = wildCard && hand.Contains("J");
             List<Tuple<string, int>> wildCardCounts = new List<Tuple<string, int>>();
 
 
@@ -123,34 +123,40 @@
                         || x.Equals("J", StringComparison.InvariantCultureIgnoreCase))));
             }
 
-            if (labelCounts.Any(x => x.Item2 == 5) || (wildCardCounts.Any(x => x.Item2 == 5)))
+            if (labelCounts.Any(x => x.Item2 == 5) || wildCardCounts.Any(x => x.Item2 == 5))
             { //five of the same string
                 _handTypes[hand] = 1;
                 return 1;
-            } else if (labelCounts.Any(x => x.Item2 == 4) || (wildCardCounts.Any(x => x.Item2 == 4)))
+            }
+            else if (labelCounts.Any(x => x.Item2 == 4) || wildCardCounts.Any(x => x.Item2 == 4))
             { //four of the same string
                 _handTypes[hand] = 2;
                 return 2;
-            } else if ((labelCounts.Any(x => x.Item2 == 3) && labelCounts.Any(x => x.Item2 == 2)) || 
-                (wildCardAtPlay && wildCardCounts.Select(x => x.Item2).Max() == 3 && labelCounts.Count(x => x.Item2 == 2) == 2))
+            }
+            else if (labelCounts.Any(x => x.Item2 == 3) && labelCounts.Any(x => x.Item2 == 2) ||
+                wildCardAtPlay && wildCardCounts.Select(x => x.Item2).Max() == 3 && labelCounts.Count(x => x.Item2 == 2) == 2)
             { //three of one kind & two of another
                 _handTypes[hand] = 3;
                 return 3;
-            } else if ((labelCounts.Any(x => x.Item2 == 3) && labelCounts.Count(x => (x.Item2 == 0 || x.Item2 == 1)) == labelCounts.Count() - 1) ||
-                (wildCardAtPlay && wildCardCounts.Any(x => x.Item2 == 3) && labelCounts.Count(x => (x.Item2 == 0 || x.Item2 == 1)) == labelCounts.Count() - 1))
+            }
+            else if (labelCounts.Any(x => x.Item2 == 3) && labelCounts.Count(x => x.Item2 == 0 || x.Item2 == 1) == labelCounts.Count() - 1 ||
+                wildCardAtPlay && wildCardCounts.Any(x => x.Item2 == 3) && labelCounts.Count(x => x.Item2 == 0 || x.Item2 == 1) == labelCounts.Count() - 1)
             { //three of one kind & two unique
                 _handTypes[hand] = 4;
                 return 4;
-            } else if ((labelCounts.Count(x => x.Item2 == 2) == 2) ||
-                (wildCardAtPlay && wildCardCounts.Count(x => x.Item2 == 2) == 2  && labelCounts.Count(x => x.Item2 == 2) == 1))
+            }
+            else if (labelCounts.Count(x => x.Item2 == 2) == 2 ||
+                wildCardAtPlay && wildCardCounts.Count(x => x.Item2 == 2) == 2 && labelCounts.Count(x => x.Item2 == 2) == 1)
             { //two of one kind & two of another
                 _handTypes[hand] = 5;
                 return 5;
-            } else if (labelCounts.Any(x => x.Item2 == 2) || (wildCardAtPlay && wildCardCounts.Any(x => x.Item2 == 2)))
+            }
+            else if (labelCounts.Any(x => x.Item2 == 2) || wildCardAtPlay && wildCardCounts.Any(x => x.Item2 == 2))
             { //two of one kind
                 _handTypes[hand] = 6;
                 return 6;
-            } else if (labelCounts.All(x => (x.Item2 == 0 || x.Item2 == 1)))
+            }
+            else if (labelCounts.All(x => x.Item2 == 0 || x.Item2 == 1))
             { //all distinct
                 _handTypes[hand] = 7;
                 return 7;

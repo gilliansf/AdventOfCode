@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace AdventOfCode2023
+namespace AdventOfCode2023.Solutions
 {
     public class Day01 : Solver
     {
@@ -54,7 +54,7 @@ namespace AdventOfCode2023
 
         private string GetNumber(string number)
         {
-            string[] representations = new string[10] {"zero", "one", "two", "three", "four", "five", 
+            string[] representations = new string[10] {"zero", "one", "two", "three", "four", "five",
                 "six", "seven", "eight", "nine"};
             return Array.IndexOf(representations, number).ToString();
         }
